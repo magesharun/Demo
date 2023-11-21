@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day to day quotes</title>
+    <link rel="stylesheet" href="./Quotegenerator.css">
+</head>
+<body>
+    <div class="quote-box">
+        <h2>Quote of the day</h2>
+        <blockquote id="quote">Loading...</blockquote>
+        <span id="author">Loading...</span>
+        <div>
+            <button onclick="getQuote(api_url)">New Quote</button>
+            <a id="whatsapp" href="#" target="_blank">
+            <button  ><img src="./whatsapp-design-template-a62f0bf703ae0061d9754c93653c510a_screen.jpg" alt="">Whatsapp</button></a>
+        </div>
+    </div>
+    <script>
+        const api_url = "https://api.quotable.io/random";
+
+        async function getQuote(url) {
+            const response = await fetch(url);
+            const data = await response.json();
+            console.log(data);
+
+            // Update the HTML elements with the new quote
+            document.getElementById("quote").innerText = data.content;
+            document.getElementById("author").innerText = "- " + data.author;
+
+              // Update the WhatsApp share link
+              const whatsappLink = `https://wa.me/?text=${encodeURIComponent(`${data.content} - ${data.author}`)}`;
+            document.getElementById("whatsapp").href = whatsappLink;
+        }
+
+        // Initial quote loading
+        getQuote(api_url);
+    </script>
+</body>
+</html>
